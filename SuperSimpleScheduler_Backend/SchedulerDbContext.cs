@@ -24,6 +24,7 @@ namespace SuperSimpleScheduler_Backend
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure your model here
+            modelBuilder.Entity<User>().HasIndex(user => user.Email).IsUnique();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
