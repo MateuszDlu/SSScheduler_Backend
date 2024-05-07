@@ -23,8 +23,26 @@ namespace SuperSimpleScheduler_Backend
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configure your model here
-            modelBuilder.Entity<User>().HasIndex(user => user.Email).IsUnique();
+            // Configure properties for User entity
+            modelBuilder.Entity<User>().Property(u => u.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<User>().Property(u => u.Email).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<User>().Property(u => u.Password).IsRequired();
+
+            // Configure properties for Category entity
+            modelBuilder.Entity<Category>().Property(c => c.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Category>().Property(c => c.Name).IsRequired().HasMaxLength(100);
+
+            // Configure properties for Task entity
+            modelBuilder.Entity<Models.Task>().Property(t => t.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Models.Task>().Property(t => t.Title).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<Models.Task>().Property(t => t.Description).HasMaxLength(500);
+            modelBuilder.Entity<Models.Task>().Property(t => t.Deadline).HasColumnType("datetime2");
+
+            // User-Category relationship
+            modelBuilder.Entity<Category>().HasOne(c => c.User).WithMany(u => u.Categories);
+
+            // Task-Category relationship
+            modelBuilder.Entity<Models.Task>().HasOne(t => t.Category).WithMany(c => c.Tasks);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -20,8 +20,8 @@ namespace SuperSimpleScheduler_Backend.Models
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password, ErrorMessage = "Invalid password")]
-        string Password { get; set; }
+        public string Password { get; set; }
 
-        List<Category> Categories { get; set; }
+        public List<Category> Categories { get; set; }
     }
 }
