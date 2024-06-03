@@ -14,11 +14,11 @@ namespace SuperSimpleScheduler_Backend.Models
         public int? Id { get; set;}
 
         [Required(ErrorMessage = "Name is required")]
-        string Name { get; set; }
+        public required string Name { get; set; }
         
-        List<Task> Tasks { get; set; } = new List<Task>();
+        public List<Task> Tasks { get; set; } = new List<Task>();
 
         [Required(ErrorMessage = "User is required")]
-        User User { get; set; }
+        public required User User { get; set; }
     }
 }

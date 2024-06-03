@@ -15,14 +15,14 @@ namespace SuperSimpleScheduler_Backend.Models
 
         [Required(ErrorMessage = "Title is required")]
         [StringLength(100)]
-        string Title { get; set; }
+        public required string Title { get; set; }
 
         [StringLength(500)]
-        string? Description { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
 
-        DateTime? Deadline { get; set; } = null;
+        public DateTime? Deadline { get; set; } = null;
 
         [Required(ErrorMessage = "Category is required")]
-        Category Category { get; set; }
+        public required Category Category { get; set; }
     }
 }
