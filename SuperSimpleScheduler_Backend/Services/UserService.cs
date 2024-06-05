@@ -36,7 +36,7 @@ namespace SuperSimpleScheduler_Backend.Services
             return newUser;
         }
 
-        public async Task<User> DeleteUserByIdAsync(int userId)
+        public async Task<User> DeleteUserByIdAsync(int userId) //TODO callapse delete
         {
             var user = await GetUserByIdAsync(userId);
             if (user == null)
