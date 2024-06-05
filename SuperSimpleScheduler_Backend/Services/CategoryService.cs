@@ -13,7 +13,7 @@ namespace SuperSimpleScheduler_Backend.Services
         public CategoryService(SchedulerDbContext dbContext){
             _dbContext = dbContext;
         }
-        public async Task<object> CreateCategory(string name, User user)
+        public async Task<object> CreateCategoryAsync(string name, User user)
         {
             var usersCategory = user.Categories.FirstOrDefault(category => category.Name == name);
             if (usersCategory != null){
@@ -32,9 +32,9 @@ namespace SuperSimpleScheduler_Backend.Services
             return newCategory;
         }
 
-        public async Task<Category> DeleteCategory(int categoryId) // TODO callapse delete
+        public async Task<Category> DeleteCategoryAsync(int categoryId) // TODO callapse delete
         {
-            var category = await GetCategorieById(categoryId);
+            var category = await GetCategorieByIdAsync(categoryId);
             if (category == null)
                 return null!;
             _dbContext.Categories.Remove((Category)category);
@@ -42,19 +42,19 @@ namespace SuperSimpleScheduler_Backend.Services
             return (Category)category;
         }
 
-        public async Task<Category?> GetCategorieById(int categoryId)
+        public async Task<Category?> GetCategorieByIdAsync(int categoryId)
         {
             return await _dbContext.Categories.SingleOrDefaultAsync(category => category.Id.Equals(categoryId));
         }
 
-        public async Task<IEnumerable<Category>> GetCategoriesByUserId(int userId)
+        public async Task<IEnumerable<Category>> GetCategoriesByUserIdAsync(int userId)
         {
             return await _dbContext.Users.Where(user => user.Id == userId).SelectMany(user => user.Categories).ToListAsync();
         }
 
-        public async Task<object> UpdateCategory(int categoryId, string name)
+        public async Task<object> UpdateCategoryAsync(int categoryId, string name)
         {
-            var category = await GetCategorieById(categoryId);
+            var category = await GetCategorieByIdAsync(categoryId);
             if(category == null){
                 return null!;
             }
