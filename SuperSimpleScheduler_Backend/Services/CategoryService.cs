@@ -27,6 +27,8 @@ namespace SuperSimpleScheduler_Backend.Services
                 User = user
             };
 
+            //TODO validation?
+
             await _dbContext.AddAsync(newCategory);
             await _dbContext.SaveChangesAsync();
             return newCategory;

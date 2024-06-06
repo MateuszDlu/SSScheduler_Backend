@@ -2,35 +2,66 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SuperSimpleScheduler_Backend.Models;
 
 namespace SuperSimpleScheduler_Backend.Services
 {
     public class TaskService : ITaskService
     {
-        public Task<object> CreateTask(string title, string? description, DateTime? deadline, Category category)
-        {
-            throw new NotImplementedException();
+        private readonly SchedulerDbContext _dbContext;
+        public TaskService(SchedulerDbContext dbContext){
+            _dbContext = dbContext;
         }
 
-        public Task<Models.Task> DeleteTaskById(int taskId)
+        public async Task<object> CreateTaskAsync(string title, string? description, DateTime? deadline, Category category)
         {
-            throw new NotImplementedException();
+            var newTask = new Models.Task{
+                Title = title,
+                Description = description,
+                Deadline = deadline,
+                Category = category
+            };
+
+            //TODO validation?
+
+            await _dbContext.AddAsync(newTask);
+            await _dbContext.SaveChangesAsync();
+            return newTask;
         }
 
-        public Task<Models.Task> GetTaskById(int taskId)
+        public async Task<Models.Task> DeleteTaskByIdAsync(int taskId)
         {
-            throw new NotImplementedException();
+            var task = await GetTaskByIdAsync(taskId);
+            if (task == null)
+                return null!;
+            _dbContext.Tasks.Remove(task);
+            await _dbContext.SaveChangesAsync();
+            return task;
         }
 
-        public Task<IEnumerable<Models.Task>> GetTasksByCategoryId(int categoryId)
+        public async Task<Models.Task?> GetTaskByIdAsync(int taskId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Tasks.SingleOrDefaultAsync(task => task.Id.Equals(taskId));
         }
 
-        public Task<object> UpdateTask(int taskId, string title, string? description, DateTime? deadline, Category category)
+        public async Task<IEnumerable<Models.Task>> GetTasksByCategoryIdAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Categories.Where(category => category.Id.Equals(categoryId)).SelectMany(category => category.Tasks).ToListAsync();
+        }
+
+        public async Task<object> UpdateTaskAsync(int taskId, string title, string? description, DateTime? deadline, Category category)
+        {
+            var taskToUpdate = await GetTaskByIdAsync(taskId);
+            if (taskToUpdate == null)
+                return null!;
+            taskToUpdate.Title = title;
+            taskToUpdate.Description = description;
+            taskToUpdate.Deadline = deadline;
+            taskToUpdate.Category = category;
+            _dbContext.Update(taskToUpdate);
+            await _dbContext.SaveChangesAsync();
+            return taskToUpdate;
         }
     }
 }
