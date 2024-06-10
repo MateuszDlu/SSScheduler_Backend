@@ -8,11 +8,11 @@ namespace SuperSimpleScheduler_Backend.Services
 {
     public interface IUserService
     {
-        public Task<User> GetUserById(int userId);
-        public Task<User> GetUserByEmail(string userEmail);
-        public Task<User> DeleteUserById(int userId);
-        public Task<Object> UpdateUserById(int userId, string userEmail, string password);
-        public Task<Object> CreateUser(string email, string password);
-        public Task<User> GetAllUsers();
+        public Task<User?> GetUserByIdAsync(int userId);
+        public Task<User?> GetUserByEmailAsync(string userEmail);
+        public Task<User> DeleteUserByIdAsync(int userId);
+        public Task<Object> UpdateUserByIdAsync(int userId, string oldPassword, string newPassword);
+        public Task<Object> CreateUserAsync(string email, string password);
+        public Task<IEnumerable<User>> GetAllUsersAsync();
     }
 }
