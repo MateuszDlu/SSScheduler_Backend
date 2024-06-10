@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {}
+    "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {}
   },
   "projects": {
-    "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {
+    "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
+        "projectUniqueName": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
         "projectName": "SuperSimpleScheduler_Backend",
-        "projectPath": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
+        "projectPath": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
         "packagesPath": "C:\\Users\\matdl\\.nuget\\packages\\",
-        "outputPath": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\obj\\",
+        "outputPath": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matdl\\AppData\\Roaming\\NuGet\\NuGet.Config"
