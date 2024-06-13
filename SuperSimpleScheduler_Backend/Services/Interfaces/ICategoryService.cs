@@ -12,6 +12,6 @@ namespace SuperSimpleScheduler_Backend.Services
         public Task<Category> GetCategorieByIdAsync(int categoryId);
         public Task<Category> DeleteCategoryAsync(int categoryId);
         public Task<Object> UpdateCategoryAsync(int categoryId, string name);
-        public Task<Object> CreateCategoryAsync(string name, User user);
+        public Task<Object> CreateCategoryAsync(string name, int userId);
     }
 }
