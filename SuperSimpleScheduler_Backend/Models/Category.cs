@@ -17,6 +17,7 @@ namespace SuperSimpleScheduler_Backend.Models
         [Required(ErrorMessage = "Name is required")]
         public required string Name { get; set; }
         
+        [JsonIgnore]
         public List<Task> Tasks { get; set; } = new List<Task>();
 
         [Required(ErrorMessage = "User is required")]

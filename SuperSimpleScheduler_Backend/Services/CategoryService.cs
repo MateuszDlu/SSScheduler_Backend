@@ -35,6 +35,7 @@ namespace SuperSimpleScheduler_Backend.Services
                 User = user,
             };
             user.Categories.Add(newCategory);
+            _dbContext.Update(user);
 
             //TODO validation?
 
@@ -45,7 +46,7 @@ namespace SuperSimpleScheduler_Backend.Services
 
         public async Task<Category> DeleteCategoryAsync(int categoryId) // TODO callapse delete
         {
-            var category = await GetCategorieByIdAsync(categoryId);
+            var category = await GetCategoryByIdAsync(categoryId);
             if (category == null)
                 return null!;
             _dbContext.Categories.Remove((Category)category);
@@ -53,7 +54,7 @@ namespace SuperSimpleScheduler_Backend.Services
             return (Category)category;
         }
 
-        public async Task<Category?> GetCategorieByIdAsync(int categoryId)
+        public async Task<Category?> GetCategoryByIdAsync(int categoryId)
         {
             return await _dbContext.Categories.SingleOrDefaultAsync(category => category.Id.Equals(categoryId));
         }
@@ -65,7 +66,7 @@ namespace SuperSimpleScheduler_Backend.Services
 
         public async Task<object> UpdateCategoryAsync(int categoryId, string name)
         {
-            var category = await GetCategorieByIdAsync(categoryId);
+            var category = await GetCategoryByIdAsync(categoryId);
             if(category == null){
                 return null!;
             }

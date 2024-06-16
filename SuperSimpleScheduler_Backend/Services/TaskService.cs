@@ -10,18 +10,27 @@ namespace SuperSimpleScheduler_Backend.Services
     public class TaskService : ITaskService
     {
         private readonly SchedulerDbContext _dbContext;
-        public TaskService(SchedulerDbContext dbContext){
+        private readonly ICategoryService _categoryService;
+        public TaskService(SchedulerDbContext dbContext, ICategoryService categoryService){
             _dbContext = dbContext;
+            _categoryService = categoryService;
         }
 
-        public async Task<object> CreateTaskAsync(string title, string? description, DateTime? deadline, Category category)
+        public async Task<object> CreateTaskAsync(string title, string? description, DateTime? deadline, int categoryId)
         {
+            var category = await _categoryService.GetCategoryByIdAsync(categoryId);
+            if (category == null){
+                return "category not found";
+            }
+
             var newTask = new Models.Task{
                 Title = title,
                 Description = description,
                 Deadline = deadline,
                 Category = category
             };
+            category.Tasks.Add(newTask);
+            _dbContext.Update(category);
 
             //TODO validation?
 
@@ -42,7 +51,7 @@ namespace SuperSimpleScheduler_Backend.Services
 
         public async Task<Models.Task?> GetTaskByIdAsync(int taskId)
         {
-            return await _dbContext.Tasks.SingleOrDefaultAsync(task => task.Id.Equals(taskId));
+            return await _dbContext.Tasks.Include(task => task.Category).SingleOrDefaultAsync(task => task.Id.Equals(taskId));
         }
 
         public async Task<IEnumerable<Models.Task>> GetTasksByCategoryIdAsync(int categoryId)
@@ -50,15 +59,23 @@ namespace SuperSimpleScheduler_Backend.Services
             return await _dbContext.Categories.Where(category => category.Id.Equals(categoryId)).SelectMany(category => category.Tasks).ToListAsync();
         }
 
-        public async Task<object> UpdateTaskAsync(int taskId, string title, string? description, DateTime? deadline, Category category)
+        public async Task<object> UpdateTaskAsync(int taskId, string title, string? description, DateTime? deadline, int categoryId)
         {
             var taskToUpdate = await GetTaskByIdAsync(taskId);
             if (taskToUpdate == null)
                 return null!;
+            if(taskToUpdate.Category.Id != categoryId){
+                var categoryToSwap = await _categoryService.GetCategoryByIdAsync(categoryId);
+                if(categoryToSwap == null)
+                    return null!;
+                categoryToSwap.Tasks.Add(taskToUpdate);
+                taskToUpdate.Category.Tasks.Remove(taskToUpdate);
+                _dbContext.Update(categoryToSwap);
+                _dbContext.Update(taskToUpdate.Category);
+            }
             taskToUpdate.Title = title;
             taskToUpdate.Description = description;
             taskToUpdate.Deadline = deadline;
-            taskToUpdate.Category = category;
             _dbContext.Update(taskToUpdate);
             await _dbContext.SaveChangesAsync();
             return taskToUpdate;
