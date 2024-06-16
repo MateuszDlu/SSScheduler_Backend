@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1KrbD7tn0ITFScS4+YHa8PwtfDgUFMiWPSAcMADoLYWRtXuK1P42fjxOUeJouEEJmRYELKDkcbPYmwCyLa4NIw==",
+  "dgSpecHash": "uGETiqGmMcMHfFUuJVIbBVB0ai3DUSfXbYeD72zT8XXgJgYGhef2GD/CNwWLbpDY6D/DHhNzClMSz5uJh+Lmkw==",
   "success": true,
-  "projectFilePath": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
+  "projectFilePath": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\matdl\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\matdl\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

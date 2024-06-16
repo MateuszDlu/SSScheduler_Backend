@@ -53,12 +53,12 @@ namespace SuperSimpleScheduler_Backend.Services
 
         public async Task<User?> GetUserByEmailAsync(string userEmail)
         {
-            return await _dbContext.Users.SingleOrDefaultAsync(user => user.Email.Equals(userEmail));
+            return await _dbContext.Users.Include(user => user.Categories).SingleOrDefaultAsync(user => user.Email.Equals(userEmail));
         }
 
         public async Task<User?> GetUserByIdAsync(int userId)
         {
-            return await _dbContext.Users.SingleOrDefaultAsync(user => user.Id.Equals(userId));
+            return await _dbContext.Users.Include(user => user.Categories).SingleOrDefaultAsync(user => user.Id.Equals(userId));
         }
 
         public async Task<object> UpdateUserByIdAsync(int userId, string oldPassword, string newPassword) // practically just password change

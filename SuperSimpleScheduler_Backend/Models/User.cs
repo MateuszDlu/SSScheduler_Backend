@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SuperSimpleScheduler_Backend.Models
@@ -22,6 +23,8 @@ namespace SuperSimpleScheduler_Backend.Models
         [DataType(DataType.Password, ErrorMessage = "Invalid password")]
         public required string Password { get; set; }
 
-        public required List<Category> Categories { get; set; }
+        [JsonIgnore]
+        [Required]
+        public List<Category> Categories { get; set; }
     }
 }

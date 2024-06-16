@@ -21,7 +21,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add controllers service
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.WriteIndented = true; // Optional: makes the JSON output more readable
+    });
 
 builder.Services.AddDbContext<SchedulerDbContext>(options =>
     options.UseSqlServer(configuration.GetConnectionString("SSSchedulerDb")));

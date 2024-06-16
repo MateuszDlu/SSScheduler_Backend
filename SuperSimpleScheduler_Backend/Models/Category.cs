@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SuperSimpleScheduler_Backend.Models
@@ -16,9 +17,11 @@ namespace SuperSimpleScheduler_Backend.Models
         [Required(ErrorMessage = "Name is required")]
         public required string Name { get; set; }
         
+        [JsonIgnore]
         public List<Task> Tasks { get; set; } = new List<Task>();
 
         [Required(ErrorMessage = "User is required")]
-        public required User User { get; set; }
+        [JsonIgnore]
+        public User User { get; set; }
     }
 }

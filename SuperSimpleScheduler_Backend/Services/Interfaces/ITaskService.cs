@@ -11,7 +11,7 @@ namespace SuperSimpleScheduler_Backend.Services
         public Task<IEnumerable<Models.Task>> GetTasksByCategoryIdAsync(int categoryId);
         public Task<Models.Task> GetTaskByIdAsync(int taskId);
         public Task<Models.Task> DeleteTaskByIdAsync(int taskId);
-        public Task<Object> CreateTaskAsync(string title, string? description, DateTime? deadline, Category category);
-        public Task<Object> UpdateTaskAsync(int taskId, string title, string? description, DateTime? deadline, Category category);
+        public Task<Object> CreateTaskAsync(string title, string? description, DateTime? deadline, int categoryId);
+        public Task<Object> UpdateTaskAsync(int taskId, string title, string? description, DateTime? deadline, int categoryId);
     }
 }

@@ -10,11 +10,19 @@ namespace SuperSimpleScheduler_Backend.Services
     public class CategoryService : ICategoryService
     {
         private readonly SchedulerDbContext _dbContext;
-        public CategoryService(SchedulerDbContext dbContext){
+        private readonly IUserService _userService;
+        public CategoryService(SchedulerDbContext dbContext, IUserService userService){
             _dbContext = dbContext;
+            _userService = userService;
         }
-        public async Task<object> CreateCategoryAsync(string name, User user)
+        public async Task<object> CreateCategoryAsync(string name, int userId)
         {
+            var user = await _userService.GetUserByIdAsync(userId);
+
+            if (user == null){
+                return "user not found";
+            }
+
             var usersCategory = user.Categories.FirstOrDefault(category => category.Name == name);
             if (usersCategory != null){
                 return "name of category must by unique";
@@ -24,8 +32,10 @@ namespace SuperSimpleScheduler_Backend.Services
                 Id = null,
                 Name = name,
                 Tasks = new List<Models.Task>(),
-                User = user
+                User = user,
             };
+            user.Categories.Add(newCategory);
+            _dbContext.Update(user);
 
             //TODO validation?
 
@@ -36,7 +46,7 @@ namespace SuperSimpleScheduler_Backend.Services
 
         public async Task<Category> DeleteCategoryAsync(int categoryId) // TODO callapse delete
         {
-            var category = await GetCategorieByIdAsync(categoryId);
+            var category = await GetCategoryByIdAsync(categoryId);
             if (category == null)
                 return null!;
             _dbContext.Categories.Remove((Category)category);
@@ -44,19 +54,19 @@ namespace SuperSimpleScheduler_Backend.Services
             return (Category)category;
         }
 
-        public async Task<Category?> GetCategorieByIdAsync(int categoryId)
+        public async Task<Category?> GetCategoryByIdAsync(int categoryId)
         {
             return await _dbContext.Categories.SingleOrDefaultAsync(category => category.Id.Equals(categoryId));
         }
 
-        public async Task<IEnumerable<Category>> GetCategoriesByUserIdAsync(int userId)
+        public async Task<IEnumerable<Category>?> GetCategoriesByUserIdAsync(int userId)
         {
             return await _dbContext.Users.Where(user => user.Id == userId).SelectMany(user => user.Categories).ToListAsync();
         }
 
         public async Task<object> UpdateCategoryAsync(int categoryId, string name)
         {
-            var category = await GetCategorieByIdAsync(categoryId);
+            var category = await GetCategoryByIdAsync(categoryId);
             if(category == null){
                 return null!;
             }
