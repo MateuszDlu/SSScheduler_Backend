@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SuperSimpleScheduler_Backend.Services;
 
@@ -18,12 +19,14 @@ namespace SuperSimpleScheduler_Backend.Controllers
         }
 
         [HttpGet("{userId:int}")]
+        [Authorize]
         public async Task<IActionResult> GetUserById( int userId){
             var result = await _userService.GetUserByIdAsync(userId);
             return result == null ? NotFound() : Ok(result);
         }
 
         [HttpGet("by-email/{userEmail}")]
+        [Authorize]
         public async Task<IActionResult> GetUserByEmail( string userEmail){
             var result = await _userService.GetUserByEmailAsync(userEmail);
             return result == null ? NotFound() : Ok(result);
@@ -51,6 +54,7 @@ namespace SuperSimpleScheduler_Backend.Controllers
         }
 
         [HttpPut("{userId:int}")]
+        [Authorize]
         public async Task<IActionResult> UpdateUserAccount(
             int userId, [FromForm] string oldPassword, [FromForm] string newPassword, [FromForm] string confirmNewPassword)
         {
@@ -63,6 +67,7 @@ namespace SuperSimpleScheduler_Backend.Controllers
         }
 
         [HttpDelete("{userId:int}")]
+        [Authorize]
         public async Task<IActionResult> DeleteUserAccount(int userId){
             var result = await _userService.DeleteUserByIdAsync(userId);
             return result == null ? NotFound() : Ok(result);

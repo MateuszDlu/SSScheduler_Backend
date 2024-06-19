@@ -21,6 +21,7 @@ namespace SuperSimpleScheduler_Backend.Models
 
         [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password, ErrorMessage = "Invalid password")]
+        [MinLength(6)]
         public required string Password { get; set; }
 
         [JsonIgnore]

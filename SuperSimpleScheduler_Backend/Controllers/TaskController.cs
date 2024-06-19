@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SuperSimpleScheduler_Backend.Services;
 
@@ -9,6 +10,7 @@ namespace SuperSimpleScheduler_Backend.Controllers
 {
     [Route("api/task")]
     [ApiController]
+    [Authorize]
     public class TaskController : ControllerBase
     {
         private readonly ITaskService _taskService;

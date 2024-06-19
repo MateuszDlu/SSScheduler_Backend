@@ -75,3 +75,4 @@ D:\SSScheduler_back\SSScheduler_Backend\SuperSimpleScheduler_Backend\obj\Debug\n
 D:\SSScheduler_back\SSScheduler_Backend\SuperSimpleScheduler_Backend\obj\Debug\net7.0\SuperSimpleScheduler_Backend.genruntimeconfig.cache
 D:\SSScheduler_back\SSScheduler_Backend\SuperSimpleScheduler_Backend\obj\Debug\net7.0\ref\SuperSimpleScheduler_Backend.dll
 D:\SSScheduler_back\SSScheduler_Backend\SuperSimpleScheduler_Backend\bin\Debug\net7.0\BCrypt.Net-Next.dll
+D:\SSScheduler_back\SSScheduler_Backend\SuperSimpleScheduler_Backend\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
