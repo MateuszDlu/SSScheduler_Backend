@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,12 @@ namespace SuperSimpleScheduler_Backend.Services
             var user = await _userService.GetUserByIdAsync(userId);
 
             if (user == null){
-                return "user not found";
+                return "User not found";
             }
 
             var usersCategory = user.Categories.FirstOrDefault(category => category.Name == name);
             if (usersCategory != null){
-                return "name of category must by unique";
+                return "Category name must be unique";
             }
 
             var newCategory = new Category{
@@ -37,14 +38,17 @@ namespace SuperSimpleScheduler_Backend.Services
             user.Categories.Add(newCategory);
             _dbContext.Update(user);
 
-            //TODO validation?
+            var validationErrors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(newCategory, new ValidationContext(newCategory, serviceProvider: null, items: null), validationErrors, true)){
+                return validationErrors;
+            }
 
             await _dbContext.AddAsync(newCategory);
             await _dbContext.SaveChangesAsync();
             return newCategory;
         }
 
-        public async Task<Category> DeleteCategoryAsync(int categoryId) // TODO callapse delete
+        public async Task<Category> DeleteCategoryAsync(int categoryId)
         {
             var category = await GetCategoryByIdAsync(categoryId);
             if (category == null)
@@ -66,14 +70,20 @@ namespace SuperSimpleScheduler_Backend.Services
 
         public async Task<object> UpdateCategoryAsync(int categoryId, string name)
         {
-            var category = await GetCategoryByIdAsync(categoryId);
-            if(category == null){
+            var categoryToUpdate = await GetCategoryByIdAsync(categoryId);
+            if(categoryToUpdate == null){
                 return null!;
             }
-            category.Name = name;
-            _dbContext.Update(category);
+            categoryToUpdate.Name = name;
+
+            var validationErrors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(categoryToUpdate, new ValidationContext(categoryToUpdate, serviceProvider: null, items: null), validationErrors, true)){
+                return validationErrors;
+            }
+
+            _dbContext.Update(categoryToUpdate);
             await _dbContext.SaveChangesAsync();
-            return category;
+            return categoryToUpdate;
         }
     }
 }
