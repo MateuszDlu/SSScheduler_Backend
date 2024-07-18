@@ -14,6 +14,19 @@ var configuration = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 
+//ALLOWS LOCAL HOST FOR DEVELOPMENT [CHANGE LATER]
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:3000")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials();
+        });
+});
+
 //mapping interfaces
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
@@ -62,6 +75,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
+
+app.UseCors("AllowLocalhost");//ALLOWS LOCAL HOST FOR DEVELOPMENT [CHANGE LATER]
 
 app.UseHttpsRedirection();
 
