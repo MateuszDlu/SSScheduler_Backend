@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using SuperSimpleScheduler_Backend.Constants;
 
 namespace SuperSimpleScheduler_Backend.Models
 {
@@ -21,6 +22,7 @@ namespace SuperSimpleScheduler_Backend.Models
         [StringLength(500)]
         public string? Description { get; set; } = string.Empty;
 
+        [DateInFuture]
         public DateTime? Deadline { get; set; } = null;
 
         [Required(ErrorMessage = "Category is required")]

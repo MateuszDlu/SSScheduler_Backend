@@ -22,21 +22,26 @@ namespace SuperSimpleScheduler_Backend.Services
                 return "email must be unique";
             }
 
-            //TODO password hashing
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
             var newUser = new User{
                 Id = null,
                 Email = email,
-                Password = password,
+                Password = hashedPassword,
                 Categories = new List<Category>()
             };
+            Console.WriteLine(hashedPassword);
 
-            //TODO validation?
+            var validationErrors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(newUser, new ValidationContext(newUser, serviceProvider: null, items: null), validationErrors, true)){
+                return validationErrors;
+            }
+
             await _dbContext.AddAsync(newUser);
             await _dbContext.SaveChangesAsync();
             return newUser;
         }
 
-        public async Task<User> DeleteUserByIdAsync(int userId) //TODO callapse delete
+        public async Task<User> DeleteUserByIdAsync(int userId)
         {
             var user = await GetUserByIdAsync(userId);
             if (user == null)
@@ -64,9 +69,11 @@ namespace SuperSimpleScheduler_Backend.Services
         public async Task<object> UpdateUserByIdAsync(int userId, string oldPassword, string newPassword) // practically just password change
         {
             var user = await GetUserByIdAsync(userId);
-            if (user == null || oldPassword != user.Password) //TODO password hashing
+            if (user == null || !BCrypt.Net.BCrypt.Verify(oldPassword, user.Password)) 
                 return null!;
-            user.Password = newPassword; //TODO password hashing
+            
+            var hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.Password = hashedNewPassword; 
             _dbContext.Update(user);
             await _dbContext.SaveChangesAsync();
             return user;

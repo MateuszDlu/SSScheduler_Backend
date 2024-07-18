@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace SuperSimpleScheduler_Backend.Services
         {
             var category = await _categoryService.GetCategoryByIdAsync(categoryId);
             if (category == null){
-                return "category not found";
+                return "Category not found";
             }
 
             var newTask = new Models.Task{
@@ -32,7 +33,10 @@ namespace SuperSimpleScheduler_Backend.Services
             category.Tasks.Add(newTask);
             _dbContext.Update(category);
 
-            //TODO validation?
+            var validationErrors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(newTask, new ValidationContext(newTask, serviceProvider: null, items: null), validationErrors, true)){
+                return validationErrors;
+            }
 
             await _dbContext.AddAsync(newTask);
             await _dbContext.SaveChangesAsync();
@@ -76,6 +80,12 @@ namespace SuperSimpleScheduler_Backend.Services
             taskToUpdate.Title = title;
             taskToUpdate.Description = description;
             taskToUpdate.Deadline = deadline;
+
+            var validationErrors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(taskToUpdate, new ValidationContext(taskToUpdate, serviceProvider: null, items: null), validationErrors, true)){
+                return validationErrors;
+            }
+
             _dbContext.Update(taskToUpdate);
             await _dbContext.SaveChangesAsync();
             return taskToUpdate;

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {}
+    "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {}
   },
   "projects": {
-    "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {
+    "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
+        "projectUniqueName": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
         "projectName": "SuperSimpleScheduler_Backend",
-        "projectPath": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
+        "projectPath": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\SuperSimpleScheduler_Backend.csproj",
         "packagesPath": "C:\\Users\\matdl\\.nuget\\packages\\",
-        "outputPath": "D:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\obj\\",
+        "outputPath": "d:\\SSScheduler_back\\SSScheduler_Backend\\SuperSimpleScheduler_Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\matdl\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,6 +38,18 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.10, )"
+            },
+            "Microsoft.AspNetCore.Cors": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.11, )"
