@@ -39,11 +39,14 @@ namespace SuperSimpleScheduler_Backend.Controllers
             [FromForm] string email, [FromForm] string password, [FromForm] string confirmPassword)
         {
             if(!string.Equals(password, confirmPassword)){
-                return BadRequest("Passwords don't match");
+                return Unauthorized("Passwords don't match");
             }
 
             var result = await _userService.CreateUserAsync(email, password);
             if(!(result is Models.User)){
+                if(result.Equals("email not unique")){
+                    return Conflict(result);
+                }
                 return BadRequest(result);
             }
             if (result==null){
