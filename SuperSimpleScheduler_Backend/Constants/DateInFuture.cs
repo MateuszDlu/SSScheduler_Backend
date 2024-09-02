@@ -15,7 +15,7 @@ namespace SuperSimpleScheduler_Backend.Constants
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value == null){
+            if (value == ""){
                 return ValidationResult.Success!;
             }
 
