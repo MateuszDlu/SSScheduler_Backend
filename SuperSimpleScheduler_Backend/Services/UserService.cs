@@ -19,7 +19,7 @@ namespace SuperSimpleScheduler_Backend.Services
         {
             var userFromDb = await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == email);
             if (userFromDb != null){
-                return "email must be unique";
+                return "email not unique";
             }
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);

@@ -32,6 +32,9 @@ namespace SuperSimpleScheduler_Backend.Controllers
         {
             var result = await _categoryService.CreateCategoryAsync(name, userId);
             if (!(result is Models.Category)){
+                if(result == "Category name must be unique"){
+                    return Conflict(result);
+                }
                 return BadRequest(result);
             }
             if (result==null){
